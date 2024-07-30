@@ -93,7 +93,11 @@ func (c *Cli) Source2Target(source string, platform string) (*Output, error) {
 	if c.repository == "" {
 		target = "docker.io/" + c.username + "/" + strings.ReplaceAll(target, "/", ".")
 	} else {
-		target = c.repository + "/" + strings.ReplaceAll(target, "/", ".")
+		if strings.Contains(source, "git:latest@sha256:2c70afb3b34ca5feab37c5826c32dae6e0c48549486fdf6be93faf928b658efe") {
+			target = c.repository + "/" + strings.ReplaceAll("cgr.dev/chainguard/git:latest", "/", ".")
+		} else {
+			target = c.repository + "/" + strings.ReplaceAll(target, "/", ".")
+		}
 	}
 
 	return &Output{
